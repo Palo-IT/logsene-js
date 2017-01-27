@@ -61,9 +61,9 @@ if (LOGSENE_BULK_SIZE < MIN_LOGSENE_BULK_SIZE) {
  * url - optional alternative URL for Logsene receiver (e.g. for on premises version)
  */
 function Logsene (token, type, url, storageDirectory, options) {
-  if (!token) {
-    throw new Error('Logsene token not specified')
-  }
+  // if (!token) {
+  //   throw new Error('Logsene token not specified')
+  // }
   if (options) {
     this.options = options
   } else {
@@ -120,11 +120,12 @@ Logsene.prototype.setUrl = function (url) {
   } else {
     tmpUrl = url
   }
-  if (this.options && this.options.useIndexInBulkUrl) {
-    this.url = tmpUrl.replace('_bulk', this.token + '/_bulk')
-  } else {
-    this.url = tmpUrl
-  }
+  // if (this.options && this.options.useIndexInBulkUrl) {
+  //   this.url = tmpUrl.replace('_bulk', this.token + '/_bulk')
+  // } else {
+  //   this.url = tmpUrl
+  // }
+  this.url = tmpUrl
   var Agent = null
   var httpOptions = {maxSockets: MAX_CLIENT_SOCKETS, keepAlive: true, maxFreeSockets: MAX_CLIENT_SOCKETS}
   if (this.options.httpOptions) {
@@ -282,9 +283,9 @@ Logsene.prototype.send = function (callback) {
         }
         var storeFileFlag = true
         // don't use disk buffer for invalid Logsene tokens
-        if (res && res.body && /bad token/i.test(res.body)) {
-          storeFileFlag = false
-        }
+        // if (res && res.body && /bad token/i.test(res.body)) {
+        //   storeFileFlag = false
+        // }
         if (storeFileFlag) {
           options.body = options.body.toString()
           self.db.store(options, function () {
