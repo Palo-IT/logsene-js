@@ -149,7 +149,7 @@ var DiskBuffer = require('./DiskBuffer.js')
 
 Logsene.prototype.diskBuffer = function (enabled, dir) {
   if (enabled) {
-    var tmpDir = path.join((dir || require('os').tmpdir()), this.token)
+    var tmpDir = dir || require('os').tmpdir()
     this.db = DiskBuffer.createDiskBuffer({
       tmpDir: tmpDir,
       maxStoredRequests: MAX_STORED_REQUESTS,
