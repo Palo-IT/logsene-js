@@ -85,7 +85,7 @@ function Logsene (token, type, url, storageDirectory, options) {
   }
   const ELK_USERNAME = process.env.ELK_USERNAME
   const ELK_PASSWORD = process.env.ELK_PASSWORD
-  this.setUrl(url || process.env.LOGSENE_URL || process.env.LOGSENE_RECEIVER_URL || `https://${ELK_USERNAME}:${ELK_PASSWORD}@@elastic.elk.shifu.emedia-asia.net:8443/applogs/${this.sourceName}`)
+  this.setUrl(url || process.env.LOGSENE_URL || process.env.LOGSENE_RECEIVER_URL || `https://${ELK_USERNAME}:${ELK_PASSWORD}@elastic.elk.shifu.emedia-asia.net:8443/applogs/${this.sourceName}`)
   this.type = type || 'logs'
   this.hostname = process.env.SPM_REPORTED_HOSTNAME || os.hostname()
   this.bulkReq = new streamBuffers.WritableStreamBuffer({
