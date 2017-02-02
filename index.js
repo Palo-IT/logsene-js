@@ -79,7 +79,8 @@ function Logsene (token, type, url, storageDirectory, options) {
   this.maxMessageFieldSize = MAX_MESSAGE_FIELD_SIZE
   this.xLogseneOrigin = xLogseneOrigin
   this.token = token
-  this.setUrl(url || process.env.LOGSENE_URL || process.env.LOGSENE_RECEIVER_URL || 'https://logsene-receiver.sematext.com/_bulk')
+  //this.setUrl(url || process.env.LOGSENE_URL || process.env.LOGSENE_RECEIVER_URL || 'https://logsene-receiver.sematext.com/_bulk')
+  this.setUrl(url || process.env.LOGSENE_URL || process.env.LOGSENE_RECEIVER_URL || 'https://elastic.elk.shifu.emedia-asia.net:8443/_bulk')
   this.type = type || 'logs'
   this.hostname = process.env.SPM_REPORTED_HOSTNAME || os.hostname()
   this.bulkReq = new streamBuffers.WritableStreamBuffer({
