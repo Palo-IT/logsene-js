@@ -265,7 +265,7 @@ Logsene.prototype.send = function (callback) {
     body: buffer.getContents(),
     method: 'POST'
   }
-
+console.log(options.url);
   if (options.body === false) {
     return
   }
