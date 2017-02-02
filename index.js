@@ -79,8 +79,13 @@ function Logsene (token, type, url, storageDirectory, options) {
   this.maxMessageFieldSize = MAX_MESSAGE_FIELD_SIZE
   this.xLogseneOrigin = xLogseneOrigin
   this.token = token
-  //this.setUrl(url || process.env.LOGSENE_URL || process.env.LOGSENE_RECEIVER_URL || 'https://logsene-receiver.sematext.com/_bulk')
-  this.setUrl(url || process.env.LOGSENE_URL || process.env.LOGSENE_RECEIVER_URL || 'https://elastic.elk.shifu.emedia-asia.net:8443/_bulk')
+  this.sourceName = null
+  if (process.mainModule && process.mainModule.filename) {
+    this.sourceName = path.basename(process.mainModule.filename)
+  }
+  const ELK_USERNAME = process.env.ELK_USERNAME
+  const ELK_PASSWORD = process.env.ELK_PASSWORD
+  this.setUrl(url || process.env.LOGSENE_URL || process.env.LOGSENE_RECEIVER_URL || `https://${ELK_USERNAME}:${ELK_PASSWORD}@@elastic.elk.shifu.emedia-asia.net:8443/applogs/${this.sourceName}`)
   this.type = type || 'logs'
   this.hostname = process.env.SPM_REPORTED_HOSTNAME || os.hostname()
   this.bulkReq = new streamBuffers.WritableStreamBuffer({
@@ -89,10 +94,6 @@ function Logsene (token, type, url, storageDirectory, options) {
   })
   this.offset
   this.logCount = 0
-  this.sourceName = null
-  if (process.mainModule && process.mainModule.filename) {
-    this.sourceName = path.basename(process.mainModule.filename)
-  }
   events.EventEmitter.call(this)
   var self = this
   self.lastSend = Date.now()
