@@ -226,13 +226,10 @@ Logsene.prototype.log = function (level, message, fields, callback) {
     }
     msg.logsene_client_warning = 'Warning: message field too large > ' + this.maxMessageFieldSize + ' bytes'
   }
-console.log('++++++ Message object +++++++++');
-console.log(msg['image_name']);
-console.log(msg);
   if (elasticsearchDocId !== null) {
-    this.bulkReq.write(stringifySafe({'index': {'_index': _index, '_id': String(elasticsearchDocId), '_type': type || this.type}}) + '\n')
+    this.bulkReq.write(stringifySafe({'index': {'_index': _index, '_id': String(elasticsearchDocId), '_type': msg['image_name'] || this.type}}) + '\n')
   } else {
-    this.bulkReq.write(stringifySafe({'index': {'_index': _index, '_type': type || this.type}}) + '\n')
+    this.bulkReq.write(stringifySafe({'index': {'_index': _index, '_type': msg['image_name'] || this.type}}) + '\n')
   }
   this.bulkReq.write(stringifySafe(msg) + '\n')
 
