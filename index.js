@@ -61,6 +61,9 @@ if (LOGSENE_BULK_SIZE < MIN_LOGSENE_BULK_SIZE) {
  * url - optional alternative URL for Logsene receiver (e.g. for on premises version)
  */
 function Logsene (token, type, url, storageDirectory, options) {
+  console.log('Logsene +++++++++++++++++');
+  console.log(options);
+
   // if (!token) {
   //   throw new Error('Logsene token not specified')
   // }
@@ -83,9 +86,11 @@ function Logsene (token, type, url, storageDirectory, options) {
   if (process.mainModule && process.mainModule.filename) {
     this.sourceName = path.basename(process.mainModule.filename)
   }
+  const ELK_HOST = process.env.ELK_HOST ? process.env.ELK_HOST : 'localhost'
+  const ELK_PORT = process.env.ELK_PORT ? process.env.ELK_PORT : '9200'
   const ELK_USERNAME = process.env.ELK_USERNAME
   const ELK_PASSWORD = process.env.ELK_PASSWORD
-  this.setUrl(url || process.env.LOGSENE_URL || process.env.LOGSENE_RECEIVER_URL || `https://${ELK_USERNAME}:${ELK_PASSWORD}@elastic.elk.shifu.emedia-asia.net:8443/applogs/${this.sourceName}`)
+  this.setUrl(url || process.env.LOGSENE_URL || process.env.LOGSENE_RECEIVER_URL || `https://${ELK_USERNAME}:${ELK_PASSWORD}@${ELK_HOST}:${ELK_PORT}/application-logs/${this.sourceName}`)
   this.type = type || 'logs'
   this.hostname = process.env.SPM_REPORTED_HOSTNAME || os.hostname()
   this.bulkReq = new streamBuffers.WritableStreamBuffer({
