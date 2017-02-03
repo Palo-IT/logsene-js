@@ -61,9 +61,6 @@ if (LOGSENE_BULK_SIZE < MIN_LOGSENE_BULK_SIZE) {
  * url - optional alternative URL for Logsene receiver (e.g. for on premises version)
  */
 function Logsene (token, type, url, storageDirectory, options) {
-  console.log('Logsene +++++++++++++++++');
-  console.log(options);
-
   // if (!token) {
   //   throw new Error('Logsene token not specified')
   // }
@@ -229,7 +226,9 @@ Logsene.prototype.log = function (level, message, fields, callback) {
     }
     msg.logsene_client_warning = 'Warning: message field too large > ' + this.maxMessageFieldSize + ' bytes'
   }
-
+console.log('++++++ Message object +++++++++');
+console.log(msg['image_name']);
+console.log(msg);
   if (elasticsearchDocId !== null) {
     this.bulkReq.write(stringifySafe({'index': {'_index': _index, '_id': String(elasticsearchDocId), '_type': type || this.type}}) + '\n')
   } else {
@@ -272,7 +271,7 @@ Logsene.prototype.send = function (callback) {
     body: buffer.getContents(),
     method: 'POST'
   }
-console.log(options.url);
+// console.log(options.url);
   if (options.body === false) {
     return
   }
