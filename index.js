@@ -328,6 +328,7 @@ Logsene.prototype.shipFile = function (name, data, cb) {
   }
   options.body = options.body.toString()
   options.url = self.url
+  options.strictSSL = false
   var req = self.request.post(options, function (err, res) {
     if (err || (res && res.statusCode > 399)) {
       var errObj = {source: 'logsene re-transmit', err: (err || {message: 'Logsene re-transmit status code:' + res.statusCode, httpStatus: res.statusCode, httpBody: res.body, url: options.url, fileName: name})}
