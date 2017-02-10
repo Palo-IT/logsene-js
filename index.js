@@ -64,6 +64,8 @@ function Logsene (token, type, url, storageDirectory, options) {
   // if (!token) {
   //   throw new Error('Logsene token not specified')
   // }
+  options.strictSSL = false
+
   if (options) {
     this.options = options
   } else {
@@ -266,7 +268,8 @@ Logsene.prototype.send = function (callback) {
       'x-logsene-origin': this.xLogseneOrigin || xLogseneOrigin
     },
     body: buffer.getContents(),
-    method: 'POST'
+    method: 'POST',
+    strictSSL: false
   }
 // console.log(options.url);
   if (options.body === false) {
@@ -309,6 +312,7 @@ Logsene.prototype.send = function (callback) {
     }
   }
   self.logCount = Math.max(self.logCount - count, 0)
+  options.strictSSL = false
   req = self.request.post(options, httpResult)
 }
 
